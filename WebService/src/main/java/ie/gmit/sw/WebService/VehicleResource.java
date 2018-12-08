@@ -1,7 +1,5 @@
 package ie.gmit.sw.WebService;
 
-import java.io.StringReader;
-import java.io.StringWriter;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.List;
@@ -14,14 +12,9 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.core.GenericEntity;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBElement;
-import javax.xml.bind.JAXBException;
-import javax.xml.bind.Marshaller;
-import javax.xml.bind.Unmarshaller;
-import javax.xml.transform.stream.StreamSource;
 
 import ie.gmit.sw.models.Vehicle;
 import ie.gmit.sw.rmi.DatabaseClient;
@@ -53,15 +46,27 @@ public class VehicleResource {
 			return Response.status(404).entity(msg).build();  // return 404 for resource not found
 		}
 		else {
-			String msg = getVehicleAsXML(vehicle);
-			return Response.status(200).entity(msg).build();
+			return Response.status(200).entity(vehicle).build();
 		}		
+	}
+	
+	@GET
+	@Produces({MediaType.APPLICATION_XML})
+	@Path("/vehicles/")
+	public Response getAllCustomers() throws RemoteException {
+		this.databaseClient = new DatabaseClient();
+		
+		this.vehicles = this.databaseClient.getVehicles();
+		
+		final GenericEntity<List<Vehicle>> entity = new GenericEntity<List<Vehicle>>(vehicles) { };
+		
+		return Response.status(200).entity(entity).build();
 	}
 	
 	@POST
 	@Consumes({MediaType.APPLICATION_XML})
 	@Path("/createVehicle/{vehicleId}")
-	public Response createBooking(@PathParam("vehicleId") int vehicleId, String vehicleXML) throws RemoteException {
+	public Response createBooking(@PathParam("vehicleId") int vehicleId, Vehicle newVehicle) throws RemoteException {
 		
 		Vehicle vehicle = null;
 		this.databaseClient = new DatabaseClient();
@@ -76,7 +81,6 @@ public class VehicleResource {
 			return Response.status(409).entity(msg).build();
 		}
 		else {
-			Vehicle newVehicle = getVehicleFromXml(vehicleXML);
 			vehicles.add(newVehicle);
 			this.databaseClient.createVehicle(newVehicle);
 			String msg = "vehicle created!";
@@ -87,7 +91,7 @@ public class VehicleResource {
 	@PUT
 	@Consumes({MediaType.APPLICATION_XML})
 	@Path("/updateVehicle/{vehicleId}")
-	public Response updateBooking(@PathParam("vehicleId") int vehicleId, String vehicleXML) throws RemoteException {
+	public Response updateBooking(@PathParam("vehicleId") int vehicleId, Vehicle updatedVehicle) throws RemoteException {
 		Vehicle vehicle = null;
 		this.databaseClient = new DatabaseClient();
 		for(Vehicle v : vehicles) {
@@ -101,7 +105,6 @@ public class VehicleResource {
 			return Response.status(409).entity(msg).build();
 		}
 		else {
-			Vehicle updatedVehicle = getVehicleFromXml(vehicleXML);
 			this.databaseClient.updateVehicle(updatedVehicle);
 			String msg = "Vehicle updated!";
 			return Response.status(200).entity(msg).build(); 
@@ -118,37 +121,5 @@ public class VehicleResource {
 		String msg = "vehicle deleted";
 		return Response.status(200).entity(msg).build();
 	}
-	
-	private String getVehicleAsXML(Vehicle vo) {
-		StringWriter sw = new StringWriter();
-		Marshaller m;
-		try {
-			JAXBContext jc = JAXBContext.newInstance("ie.gmit.sw.models");
-			m = jc.createMarshaller();
-			m.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
-			m.marshal(vo, sw);
-		} catch (JAXBException e) {
-			e.printStackTrace();
-		}		
-		return sw.toString();
-	}
-	
-	private Vehicle getVehicleFromXml(String input) {
-		StringReader sr1 = new StringReader(input);
-		Unmarshaller um1;
-		Vehicle voFromXml = null;
-		try {
-			JAXBContext jc = JAXBContext.newInstance("ie.gmit.sw.models");
-			um1 = jc.createUnmarshaller();
-			StreamSource source1 = new StreamSource(sr1);
-			JAXBElement<Vehicle> voElement1 = um1.unmarshal(source1, Vehicle.class);
-			voFromXml = (Vehicle) voElement1.getValue();
-		} catch (JAXBException e) {
-			e.printStackTrace();
-		}
-		return voFromXml;
-		
-	}
-	
 }
 
