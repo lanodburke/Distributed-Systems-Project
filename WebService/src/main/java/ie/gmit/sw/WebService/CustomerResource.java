@@ -23,86 +23,86 @@ import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
 import javax.xml.transform.stream.StreamSource;
 
-import ie.gmit.sw.models.Booking;
+import ie.gmit.sw.models.Customer;
 import ie.gmit.sw.rmi.DatabaseClient;
 import ie.gmit.sw.rmi.DatabaseService;
 
-@Path("/booking")
-public class BookingResource {
+@Path("/customer")
+public class CustomerResource {
 	
-	private List<Booking> bookings = new ArrayList<Booking>();
+	private List<Customer> customers = new ArrayList<Customer>();
 	private DatabaseService databaseClient;
 		
 	@GET
 	@Produces({MediaType.APPLICATION_XML})
 	@Path("/{value}")
-	public Response getBooking(@PathParam("value") int value) throws RemoteException {
+	public Response getCustomer(@PathParam("value") int value) throws RemoteException {
 		this.databaseClient = new DatabaseClient();
 		
-		this.bookings = this.databaseClient.getBookings();
+		this.customers = this.databaseClient.getCustomers();
 		
-		Booking booking = null;
-		for(Booking b : bookings) {
-			if(b.getBookingId() == value) {
-				booking = b;
+		Customer customer = null;
+		for(Customer c : customers) {
+			if(c.getCustomerId() == value) {
+				customer = c;
 			}
 		}
 		
-		if(booking == null) {
+		if(customer == null) {
 			String msg = "The requested order does not exist";
 			return Response.status(404).entity(msg).build();  // return 404 for resource not found
 		}
 		else {
-			String msg = getBookingAsXML(booking);
+			String msg = getCustomerAsXML(customer);
 			return Response.status(200).entity(msg).build();
 		}		
 	}
 	
 	@POST
 	@Consumes({MediaType.APPLICATION_XML})
-	@Path("/createBooking/{bookingId}")
-	public Response createBooking(@PathParam("bookingId") int bookingId, String bookingXML) throws RemoteException {
+	@Path("/createCustomer/{customerId}")
+	public Response createBooking(@PathParam("customerId") int customerId, String customerXML) throws RemoteException {
 		
-		Booking booking = null;
+		Customer customer = null;
 		this.databaseClient = new DatabaseClient();
-		for(Booking b : bookings) {
-			if(b.getBookingId() == bookingId) {
-				booking = b;
+		for(Customer c : customers) {
+			if(c.getCustomerId() == customerId) {
+				customer = c;
 			}
 		}
 		
-		if(booking != null) {
-			String msg = "The order number " + bookingId + " already exists";
+		if(customer != null) {
+			String msg = "The order number " + customerId + " already exists";
 			return Response.status(409).entity(msg).build();
 		}
 		else {
-			Booking newBooking = getBookingFromXml(bookingXML);
-			bookings.add(newBooking);
-			this.databaseClient.createBooking(newBooking);
-			String msg = "Booking created!";
+			Customer newCustomer = getCustomerFromXml(customerXML);
+			customers.add(newCustomer);
+			this.databaseClient.createCustomer(newCustomer);
+			String msg = "Customer created!";
 			return Response.status(200).entity(msg).build(); // return 201 for resource created
 		}
 	}
 
 	@PUT
 	@Consumes({MediaType.APPLICATION_XML})
-	@Path("/updateBooking/{bookingId}")
-	public Response updateBooking(@PathParam("bookingId") int bookingId, String bookingXML) throws RemoteException {
-		Booking booking = null;
+	@Path("/updateCustomer/{customerId}")
+	public Response updateBooking(@PathParam("customerId") int customerId, String customerXML) throws RemoteException {
+		Customer customer = null;
 		this.databaseClient = new DatabaseClient();
-		for(Booking b : bookings) {
-			if(b.getBookingId() == bookingId) {
-				booking = b;
+		for(Customer c : customers) {
+			if(c.getCustomerId() == customerId) {
+				customer = c;
 			}
 		}
 		
-		if(booking != null) {
-			String msg = "The order number " + bookingId + " already exists";
+		if(customer != null) {
+			String msg = "The order number " + customerId + " already exists";
 			return Response.status(409).entity(msg).build();
 		}
 		else {
-			Booking updatedBooking = getBookingFromXml(bookingXML);
-			this.databaseClient.updateBooking(updatedBooking);
+			Customer updatedCustomer = getCustomerFromXml(customerXML);
+			this.databaseClient.updateCustomer(updatedCustomer);
 			String msg = "Booking updated!";
 			return Response.status(200).entity(msg).build(); 
 		}
@@ -110,43 +110,43 @@ public class BookingResource {
 	
 	@DELETE
 	@Produces({MediaType.TEXT_HTML})
-	@Path("/deleteBooking/{bookingId}")
-	public Response deleteBooking(@PathParam("bookingId") int bookingId) throws RemoteException {
+	@Path("/deleteCustomer/{customerId}")
+	public Response deleteCustomer(@PathParam("customerId") int customerId) throws RemoteException {
 		this.databaseClient = new DatabaseClient();
-		this.databaseClient.deleteBooking(bookingId);
+		this.databaseClient.deleteCustomer(customerId);
 		
 		String msg = "Customer deleted";
 		return Response.status(200).entity(msg).build();
 	}
 	
-	private String getBookingAsXML(Booking bo) {
+	private String getCustomerAsXML(Customer co) {
 		StringWriter sw = new StringWriter();
 		Marshaller m;
 		try {
 			JAXBContext jc = JAXBContext.newInstance("ie.gmit.sw.models");
 			m = jc.createMarshaller();
 			m.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
-			m.marshal(bo, sw);
+			m.marshal(co, sw);
 		} catch (JAXBException e) {
 			e.printStackTrace();
 		}		
 		return sw.toString();
 	}
 	
-	private Booking getBookingFromXml(String input) {
+	private Customer getCustomerFromXml(String input) {
 		StringReader sr1 = new StringReader(input);
 		Unmarshaller um1;
-		Booking boFromXml = null;
+		Customer coFromXml = null;
 		try {
 			JAXBContext jc = JAXBContext.newInstance("ie.gmit.sw.models");
 			um1 = jc.createUnmarshaller();
 			StreamSource source1 = new StreamSource(sr1);
-			JAXBElement<Booking> boElement1 = um1.unmarshal(source1, Booking.class);
-			boFromXml = (Booking) boElement1.getValue();
+			JAXBElement<Customer> coElement1 = um1.unmarshal(source1, Customer.class);
+			coFromXml = (Customer) coElement1.getValue();
 		} catch (JAXBException e) {
 			e.printStackTrace();
 		}
-		return boFromXml;
+		return coFromXml;
 		
 	}
 	

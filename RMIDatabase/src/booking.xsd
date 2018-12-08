@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema"
+	targetNamespace="http://sw.gmit.ie/models/"
+	xmlns:tns="http://sw.gmit.ie/models/"
+	elementFormDefault="qualified">
+
+	<complexType name="booking">
+		<sequence>
+			<element name="customer" type="tns:customer"></element>
+			<element name="vehicle" type="tns:vehicle"></element>
+			<element name="bookingId" type="int"></element>
+			<element name="bookingStartDate" type="string"></element>
+			<element name="bookingEndDate" type="string"></element>
+		</sequence>
+	</complexType>
+
+	<complexType name="customer">
+		<sequence>
+			<element name="customerId" type="int"></element>
+			<element name="firstName" type="string"></element>
+			<element name="lastName" type="string"></element>
+			<element name="address" type="string"></element>
+			<element name="dob" type="string"></element>
+		</sequence>
+	</complexType>
+
+	<complexType name="vehicle">
+		<sequence>
+			<element name="vehicleId" type="int"></element>
+			<element name="registrationNumber" type="string"></element>
+			<element name="mileage" type="int"></element>
+			<element name="condition" type="string"></element>
+		</sequence>
+	</complexType>
+</schema>
