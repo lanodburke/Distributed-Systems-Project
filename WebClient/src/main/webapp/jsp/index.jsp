@@ -14,12 +14,17 @@
     <form:form modelAttribute="booking">
         <table>
             <tr>
-            	<a href="booking">Find Booking</a>
+           		<a href="bookingList">View All Bookings</a>
+           </tr>
+           <br>
+           <tr>
+            	<a href="customerList">View All Customers</a>
             </tr>
             <br>
             <tr>
-           		<a href="bookingList">View All Bookings</a>
-           </tr>
+            	<a href="vehicleList">View All Vehicles</a>
+            </tr>
+            <br>
         </table>
     </form:form>
 </body>

@@ -1,7 +1,9 @@
 package ie.gmit.sw.controller;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.validation.Valid;
 import javax.xml.bind.JAXBException;
@@ -13,69 +15,61 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import ie.gmit.sw.http.HttpClient;
 import ie.gmit.sw.models.Booking;
+import ie.gmit.sw.models.Customer;
+import ie.gmit.sw.models.Vehicle;
+import ie.gmit.sw.service.BookingService;
+import ie.gmit.sw.service.CustomerService;
+import ie.gmit.sw.service.VehicleService;
 
 @Controller
 public class BookingController {
 	
 	@Autowired
-	private HttpClient client;
-	
-	@RequestMapping(value = "/booking", method = RequestMethod.GET)
-	public String checkBookingIDGET(Model model) {
-	
-		Booking booking = new Booking();
-		
-		model.addAttribute("booking",booking);
-		
-		return "booking";
-	}
+	private BookingService bookingService;
+	@Autowired
+	private VehicleService vehicleService;
+	@Autowired
+	private CustomerService customerService;
 	
 	@RequestMapping(value = "/bookingList", method = RequestMethod.GET)
 	public String viewAllBookings(Model model) throws IOException, JAXBException {
-		this.client = new HttpClient();
+		this.bookingService = new BookingService();
 		
-		List<Booking> bookings = client.getAllBookings();
-		
-		for (Booking booking : bookings) {
-			System.out.println(booking.getBookingId());
-		}
+		List<Booking> bookings = bookingService.getAllBookings();
 		
 		model.addAttribute("bookings", bookings);
 		
 		return "bookingList";
 	}
 	
-	@RequestMapping(value = "/booking", method = RequestMethod.POST)
-	public String checkBookingIDPOST(@Valid @ ModelAttribute("booking") Booking booking, Model model) throws IOException, JAXBException {
-		
-		int bookingId = booking.getBookingId();
-		
-		System.out.println(bookingId);
-		
-		return "bookingList";
-	}
-	
 	@RequestMapping(value = "/createBooking", method = RequestMethod.GET)
-	public String gotoCreateBooking(Model model) throws IOException, JAXBException {	
-		Booking booking = new Booking();
+	public String createBooking(Model model, @ModelAttribute("booking") Booking booking) throws IOException, JAXBException {	
+		List<Customer> customers = customerService.getAllCustomers();
+		Map<Integer, String> customerList = new HashMap<Integer, String>();
+		
+		for (Customer customer : customers) {
+			customerList.put(customer.getCustomerId(), customer.getFirstName() + " " + customer.getLastName());
+		}
+		
+		List<Vehicle> vehicles = vehicleService.getAllVehicles();
+		Map<Integer, String> vehicleList = new HashMap<Integer, String>();
+		
+		for (Vehicle vehicle : vehicles) {
+			vehicleList.put(vehicle.getVehicleId(), vehicle.getRegistrationNumber() + " " + vehicle.getMileage());
+		}
 		
 		model.addAttribute("booking", booking);
+		model.addAttribute("customerList", customerList);
+		model.addAttribute("vehicleList", vehicleList);
 		
-		return "bookingList";
+		return "createBooking";
 	}
 	
 	@RequestMapping(value = "/createBooking", method = RequestMethod.POST)
-	public String createBooking(@Valid @ ModelAttribute("booking") Booking booking, Model model) throws IOException, JAXBException {
+	public String createBooking(@Valid @ModelAttribute("booking") Booking booking) throws IOException, JAXBException {	
+		bookingService.createBooking(booking);
 		
-		int bookingId = booking.getBookingId();
-		
-		this.client = new HttpClient();
-		
-		client.createBooking(booking);
-		
-		return "index";
+		return "redirect:bookingList";
 	}
-	
 }

@@ -10,7 +10,7 @@
 
 </head>
 <body>
-	<h1></h1>
+	<h1>Booking List</h1>
 	<table>
 		<tr>
 			<th>Booking Id</th>
@@ -33,6 +33,8 @@
 	
 	<br>
 	<a href="/">Home</a>
+	<br>
+	<a href="/createBooking">Add Booking</a>
 	
 </body>
 </html>
