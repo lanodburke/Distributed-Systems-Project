@@ -42,12 +42,13 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "", namespace = "http://sw.gmit.ie/models/", propOrder = {
+@XmlType(name = "booking", namespace = "http://sw.gmit.ie/models/", propOrder = {
     "customer",
     "vehicle",
     "bookingId",
     "bookingStartDate",
-    "bookingEndDate"
+    "bookingEndDate",
+    "bookings"
 })
 @XmlRootElement(name = "booking")
 public class Booking implements Serializable {
@@ -66,8 +67,8 @@ public class Booking implements Serializable {
     protected String bookingStartDate;
     @XmlElement(namespace = "http://sw.gmit.ie/models/", required = true)
     protected String bookingEndDate;
-    
-    private List<Booking> bookings = null;
+    @XmlElement(namespace = "http://sw.gmit.ie/models/", required = true)
+    private List<Booking> bookings;
 
 	public Booking() {}
     
@@ -192,7 +193,6 @@ public class Booking implements Serializable {
         this.bookingEndDate = value;
     }
     
-    @XmlElement(name = "bookings")
     public List<Booking> getBookings() {
 		return bookings;
 	}

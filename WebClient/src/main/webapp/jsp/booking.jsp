@@ -10,12 +10,12 @@
 <title>Booking</title>
 </head>
 <body>
-    <h1>Make a booking</h1>
+    <h1>Find a booking</h1>
     <h4>Please Enter the Booking Number</h4>
     <form:form modelAttribute="booking">
         <table>
             <tr>
-                <td>booking id:</td>
+                <td>Booking Id:</td>
                 <td><form:input path="bookingId"></form:input></td>
             </tr>
             <tr>
