@@ -26,9 +26,8 @@ public class CustomerService {
 	
 	public void createCustomer(Customer customer) {
         Client client = Client.create();        
-        WebResource webResource = client.resource(this.url + "createCustomer/" + customer.getCustomerId());
+        WebResource webResource = client.resource(this.url + "createCustomer/");
         webResource.type(MediaType.APPLICATION_XML)
-          .accept(MediaType.APPLICATION_XML)
           .post(Customer.class, customer);
         return;
     }

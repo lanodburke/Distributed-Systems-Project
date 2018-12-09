@@ -35,6 +35,10 @@
 	<a href="/">Home</a>
 	<br>
 	<a href="/createBooking">Add Booking</a>
+	<br>
+	<a href="/updateBooking">Update Booking</a>
+	<br>
+	<a href="/deleteBooking">Delete Booking</a>
 	
 </body>
 </html>

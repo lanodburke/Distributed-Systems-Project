@@ -65,27 +65,13 @@ public class CustomerResource {
 	
 	@POST
 	@Consumes({MediaType.APPLICATION_XML})
-	@Path("/createCustomer/{customerId}")
-	public Response createBooking(@PathParam("customerId") int customerId, Customer newCustomer) throws RemoteException {
-		
-		Customer customer = null;
+	@Path("/createCustomer/")
+	public Response createBooking(Customer newCustomer) throws RemoteException {
 		this.databaseClient = new DatabaseClient();
-		for(Customer c : customers) {
-			if(c.getCustomerId() == customerId) {
-				customer = c;
-			}
-		}
-		
-		if(customer != null) {
-			String msg = "The order number " + customerId + " already exists";
-			return Response.status(409).entity(msg).build();
-		}
-		else {
-			customers.add(newCustomer);
-			this.databaseClient.createCustomer(newCustomer);
-			String msg = "Customer created!";
-			return Response.status(200).entity(msg).build(); // return 201 for resource created
-		}
+		customers.add(newCustomer);
+		this.databaseClient.createCustomer(newCustomer);
+		String msg = "Customer created!";
+		return Response.status(200).entity(msg).build(); // return 201 for resource created
 	}
 
 	@PUT

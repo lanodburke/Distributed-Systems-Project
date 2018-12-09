@@ -6,12 +6,16 @@
 <html>
 <head>
 <meta charset="ISO-8859-1">
-<title>Create Booking</title>
+<title>Update Booking</title>
 </head>
 <body>
-	<h1>Create Booking</h1>
+	<h1>Update Booking</h1>
 	<form:form modelAttribute="booking">
 		<table>
+			<tr>
+				<td>Select a booking to update:</td>
+				<td><form:select path="bookingId" items="${bookingList}" /></td>
+			</tr>
 			<tr>
 				<td>Select a customer:</td>
 				<td><form:select path="customer.customerId" items="${customerList}" /></td>
@@ -21,15 +25,15 @@
 				<td><form:select path="vehicle.vehicleId" items="${vehicleList}" /></td>
 			</tr>
 			<tr>
-				<td>Enter a start date:</td>
+				<td>Enter a new start date:</td>
 				<td><form:input path="bookingStartDate"></form:input></td>
 			</tr>
 			<tr>
-				<td>Enter a end date:</td>
+				<td>Enter a new end date:</td>
 				<td><form:input path="bookingEndDate"></form:input></td>
 			</tr>
 			<tr>
-				<td colspan="2"><input type="submit" value="Create Booking" /></td>
+				<td colspan="2"><input type="submit" value="Update Booking" /></td>
 			</tr>
 		</table>
 	</form:form>

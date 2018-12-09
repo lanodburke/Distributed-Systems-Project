@@ -65,27 +65,13 @@ public class VehicleResource {
 	
 	@POST
 	@Consumes({MediaType.APPLICATION_XML})
-	@Path("/createVehicle/{vehicleId}")
-	public Response createBooking(@PathParam("vehicleId") int vehicleId, Vehicle newVehicle) throws RemoteException {
-		
-		Vehicle vehicle = null;
+	@Path("/createVehicle/")
+	public Response createBooking(Vehicle newVehicle) throws RemoteException {
 		this.databaseClient = new DatabaseClient();
-		for(Vehicle v : vehicles) {
-			if(v.getVehicleId() == vehicleId) {
-				vehicle = v;
-			}
-		}
-		
-		if(vehicle != null) {
-			String msg = "The order number " + vehicleId + " already exists";
-			return Response.status(409).entity(msg).build();
-		}
-		else {
-			vehicles.add(newVehicle);
-			this.databaseClient.createVehicle(newVehicle);
-			String msg = "vehicle created!";
-			return Response.status(200).entity(msg).build(); // return 201 for resource created
-		}
+		vehicles.add(newVehicle);
+		this.databaseClient.createVehicle(newVehicle);
+		String msg = "vehicle created!";
+		return Response.status(200).entity(msg).build(); // return 201 for resource created
 	}
 
 	@PUT

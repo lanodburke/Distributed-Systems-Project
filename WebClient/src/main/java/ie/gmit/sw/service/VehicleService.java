@@ -26,7 +26,7 @@ public class VehicleService {
 	
 	public void createVehicle(Vehicle vehicle) {
         Client client = Client.create();        
-        WebResource webResource = client.resource(this.url + "createVehicle/" + vehicle.getVehicleId());
+        WebResource webResource = client.resource(this.url + "createVehicle/");
         webResource.type(MediaType.APPLICATION_XML)
           .accept(MediaType.APPLICATION_XML)
           .post(Vehicle.class, vehicle);

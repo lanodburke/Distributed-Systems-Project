@@ -47,10 +47,9 @@ import javax.xml.bind.annotation.XmlType;
     "vehicle",
     "bookingId",
     "bookingStartDate",
-    "bookingEndDate",
-    "bookings"
+    "bookingEndDate"
 })
-@XmlRootElement(name = "booking")
+@XmlRootElement
 public class Booking implements Serializable {
 
     /**
@@ -67,8 +66,6 @@ public class Booking implements Serializable {
     protected String bookingStartDate;
     @XmlElement(namespace = "http://sw.gmit.ie/models/", required = true)
     protected String bookingEndDate;
-    @XmlElement(namespace = "http://sw.gmit.ie/models/", required = true)
-    private List<Booking> bookings;
 
 	public Booking() {}
     
@@ -192,13 +189,4 @@ public class Booking implements Serializable {
     public void setBookingEndDate(String value) {
         this.bookingEndDate = value;
     }
-    
-    public List<Booking> getBookings() {
-		return bookings;
-	}
-
-	public void setBookings(List<Booking> bookings) {
-		this.bookings = bookings;
-	}
-
 }
