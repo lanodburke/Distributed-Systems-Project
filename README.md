@@ -6,10 +6,6 @@ The RESTful Server that is being consumed by the Client was built in JAX-RS Jers
 
 This is a college project for the Distributed Systems module in GMIT.
 
-## Demonstration
-
-![Alt Text](https://media.giphy.com/media/1mgPnZpm30IIorrh9t/giphy.gif)
-
 ## Getting Started
 
 Follow the steps below to get the Project setup on your local machine.
