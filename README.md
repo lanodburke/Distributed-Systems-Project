@@ -35,6 +35,11 @@ Follow the steps below to get the Project setup on your local machine.
 * RMI Database Server
 
 ## Extras
+* Desktop Client
+
+* Deployable WebService.war file for Tomcat
+
+* RMIDatabase.jar 
 
 ## Built With
 
