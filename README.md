@@ -87,13 +87,6 @@ Follow the steps below to get the Project setup on your local machine.
 * Deployable jar files
   * Deployable jar and war files for desktop-client, database-service and booking-server
 
-
-## Built With
-
-* [RMI](https://developer.ticketmaster.com/products-and-docs/apis/discovery-api/v2/) 
-* [JAX-RS/Jersey](https://docs.microsoft.com/en-us/windows/uwp/) 
-* [Spring Boot](http://json2csharp.com/) 
-
 ## Authors
 
 * **Donal Burke** - [lanodburke](https://github.com/lanodburke)
