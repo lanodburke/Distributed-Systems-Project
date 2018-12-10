@@ -45,9 +45,10 @@ Follow the steps below to get the Project setup on your local machine.
   ./startup.h
   ````
   
-* To run the Web Client, open eclipse and import the WebClient project into eclipse. Make sure you have Spring Boot installed first. Spring boot installation [here](http://spring.io/projects/spring-boot).
+* To run the Web Client, open eclipse and import the WebClient project into eclipse. 
 
-* Next right click on the prject and click ```Run as```. Select the Spring Boot App run configuration.
+* To run the project navigate to the ie.gmit.sw package and right click the WebClientApplication.java file and click ```Run as -> Java Application``` 
+
 
 * Next navigate to the WebClient by typing the following into the browser:
 
