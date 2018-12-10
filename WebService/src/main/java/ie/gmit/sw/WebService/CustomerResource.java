@@ -52,25 +52,12 @@ public class CustomerResource {
 
 	@PUT
 	@Consumes({MediaType.APPLICATION_XML})
-	@Path("/{customerId}")
-	public Response updateCustomer(@PathParam("customerId") int customerId, Customer updatedCustomer) throws RemoteException {
-		Customer customer = null;
+	@Path("/")
+	public Response updateCustomer(Customer updatedCustomer) throws RemoteException {
 		this.databaseClient = new DatabaseClient();
-		for(Customer c : customers) {
-			if(c.getCustomerId() == customerId) {
-				customer = c;
-			}
-		}
-		
-		if(customer != null) {
-			String msg = "The order number " + customerId + " already exists";
-			return Response.status(409).entity(msg).build();
-		}
-		else {
-			this.databaseClient.updateCustomer(updatedCustomer);
-			String msg = "Booking updated!";
-			return Response.status(200).entity(msg).build(); 
-		}
+		this.databaseClient.updateCustomer(updatedCustomer);
+		String msg = "Booking updated!";
+		return Response.status(200).entity(msg).build(); 
 	}
 	
 	@DELETE

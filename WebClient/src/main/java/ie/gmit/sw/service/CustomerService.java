@@ -42,12 +42,10 @@ public class CustomerService {
 		Client client = Client.create();
 
 		WebResource webResource = client
-		   .resource(this.url + customer.getCustomerId());
+		   .resource(this.url);
 
 		ClientResponse response = webResource.type("application/xml")
 		   .put(ClientResponse.class, customer);
-		
-		System.out.println("Response code: " + response.getStatus());
 
 		if (response.getStatus() != 200) {
 			throw new RuntimeException("Failed : HTTP error code : "

@@ -1,3 +1,4 @@
+
 package ie.gmit.sw.WebService;
 
 import java.rmi.RemoteException;
@@ -54,26 +55,13 @@ public class BookingResource {
 
 	@PUT
 	@Consumes({MediaType.APPLICATION_XML})
-	@Path("/bookingId}")
-	public Response updateBooking(@PathParam("bookingId") int bookingId, Booking updatedBooking) throws RemoteException {
-		Booking booking = null;
+	@Path("/")
+	public Response updateBooking(Booking updatedBooking) throws RemoteException {
 		this.databaseClient = new DatabaseClient();
-		this.bookings = databaseClient.getBookings();
-		for(Booking b : bookings) {
-			if(b.getBookingId() == bookingId) {
-				booking = b;
-			}
-		}
-		
-		if(booking != null) {
-			String msg = "The order number " + bookingId + " already exists";
-			return Response.status(409).entity(msg).build();
-		}
-		else {
-			this.databaseClient.updateBooking(updatedBooking);
-			String msg = "Booking updated!";
-			return Response.status(200).entity(msg).build(); 
-		}
+		System.out.println("In update booking " + updatedBooking.getBookingId());
+		this.databaseClient.updateBooking(updatedBooking);
+		String msg = "Booking updated!";
+		return Response.status(200).entity(msg).build(); 
 	}
 	
 	@DELETE

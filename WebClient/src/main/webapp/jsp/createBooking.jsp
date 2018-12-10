@@ -33,5 +33,9 @@
 			</tr>
 		</table>
 	</form:form>
+	
+	<br>
+	<a href="/bookingList">View Bookings</a>
+	
 </body>
 </html>

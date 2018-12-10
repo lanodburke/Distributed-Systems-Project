@@ -42,7 +42,7 @@ public class VehicleService {
 		Client client = Client.create();
 
 		WebResource webResource = client
-		   .resource(this.url + vehicle.getVehicleId());
+		   .resource(this.url);
 
 		ClientResponse response = webResource.type("application/xml")
 		   .put(ClientResponse.class, vehicle);

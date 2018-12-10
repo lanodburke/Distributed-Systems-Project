@@ -52,26 +52,12 @@ public class VehicleResource {
 
 	@PUT
 	@Consumes({MediaType.APPLICATION_XML})
-	@Path("/{vehicleId}")
-	public Response updateVehicle(@PathParam("vehicleId") int vehicleId, Vehicle updatedVehicle) throws RemoteException {
-		Vehicle vehicle = null;
+	@Path("/")
+	public Response updateVehicle(Vehicle updatedVehicle) throws RemoteException {
 		this.databaseClient = new DatabaseClient();
-		this.vehicles = this.databaseClient.getVehicles();
-		for(Vehicle v : vehicles) {
-			if(v.getVehicleId() == vehicleId) {
-				vehicle = v;
-			}
-		}
-		
-		if(vehicle != null) {
-			String msg = "The order number " + vehicleId + " already exists";
-			return Response.status(409).entity(msg).build();
-		}
-		else {
-			this.databaseClient.updateVehicle(updatedVehicle);
-			String msg = "Vehicle updated!";
-			return Response.status(200).entity(msg).build(); 
-		}
+		this.databaseClient.updateVehicle(updatedVehicle);
+		String msg = "Vehicle updated!";
+		return Response.status(200).entity(msg).build(); 
 	}
 	
 	@DELETE
@@ -79,7 +65,7 @@ public class VehicleResource {
 	@Path("/{vehicleId}")
 	public Response deleteVehicle(@PathParam("vehicleId") int vehicleId) throws RemoteException {
 		this.databaseClient = new DatabaseClient();
-		this.databaseClient.deleteCustomer(vehicleId);
+		this.databaseClient.deleteVehicle(vehicleId);
 		
 		String msg = "vehicle deleted";
 		return Response.status(200).entity(msg).build();

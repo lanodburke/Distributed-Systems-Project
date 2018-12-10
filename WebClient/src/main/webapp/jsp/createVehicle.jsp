@@ -29,5 +29,8 @@
 			</tr>
 		</table>
 	</form:form>
+	
+	<br>
+	<a href="/vehicleList">View Vehicles</a>
 </body>
 </html>

@@ -29,9 +29,13 @@
 				<td><form:input path="dob"></form:input></td>
 			</tr>
 			<tr>
-				<td colspan="2"><input type="submit" value="Create Booking" /></td>
+				<td colspan="2"><input type="submit" value="Create Customer" /></td>
 			</tr>
 		</table>
 	</form:form>
+	
+	<br>
+	<a href="/customerList">View Customers</a>
+	
 </body>
 </html>

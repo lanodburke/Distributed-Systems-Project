@@ -42,7 +42,7 @@ public class BookingService {
 		Client client = Client.create();
 
 		WebResource webResource = client
-		   .resource(this.url + booking.getBookingId());
+		   .resource(this.url);
 
 		ClientResponse response = webResource.type("application/xml")
 		   .put(ClientResponse.class, booking);

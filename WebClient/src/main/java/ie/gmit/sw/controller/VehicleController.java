@@ -68,13 +68,13 @@ public class VehicleController {
 	}
 	
 	@RequestMapping(value = "/updateVehicle", method = RequestMethod.POST)
-	public String updateCustomerPOST(@Valid @ModelAttribute("vehicle") Vehicle vehicle) {	
+	public String updateVehiclePOST(@Valid @ModelAttribute("vehicle") Vehicle vehicle) {	
 		vehicleService.updateVehicle(vehicle);
 		return "redirect:vehicleList";
 	}
 	
 	@RequestMapping(value = "/deleteVehicle", method = RequestMethod.GET)
-	public String deleteCustomerGET(Model model, @ModelAttribute("vehicle") Vehicle vehicle) {		
+	public String deleteVehicleGET(Model model, @ModelAttribute("vehicle") Vehicle vehicle) {		
 		
 		List<Vehicle> vehicles = vehicleService.getAllVehicles();
 		Map<Integer, String> vehicleList = new HashMap<Integer, String>();
@@ -90,7 +90,7 @@ public class VehicleController {
 	}
 	
 	@RequestMapping(value = "/deleteVehicle", method = RequestMethod.POST)
-	public String deleteCustomerPOST(@Valid @ModelAttribute("vehicle") Vehicle vehicle) {	
+	public String deleteVehiclePOST(@Valid @ModelAttribute("vehicle") Vehicle vehicle) {	
 		vehicleService.deleteVehicle(vehicle);
 		return "redirect:vehicleList";
 	}

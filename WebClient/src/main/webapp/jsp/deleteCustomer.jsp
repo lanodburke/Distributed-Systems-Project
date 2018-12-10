@@ -21,5 +21,8 @@
 			</tr>
 		</table>
 	</form:form>
+	
+	<br>
+	<a href="/customerList">View Customers</a>
 </body>
 </html>
