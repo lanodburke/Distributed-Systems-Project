@@ -25,34 +25,10 @@ public class VehicleResource {
 	
 	private List<Vehicle> vehicles = new ArrayList<Vehicle>();
 	private DatabaseService databaseClient;
-		
-	@GET
-	@Produces({MediaType.APPLICATION_XML})
-	@Path("/{value}")
-	public Response getVehicle(@PathParam("value") int value) throws RemoteException {
-		this.databaseClient = new DatabaseClient();
-		
-		this.vehicles = this.databaseClient.getVehicles();
-		
-		Vehicle vehicle = null;
-		for(Vehicle v : vehicles) {
-			if(v.getVehicleId() == value) {
-				vehicle = v;
-			}
-		}
-		
-		if(vehicle == null) {
-			String msg = "The requested order does not exist";
-			return Response.status(404).entity(msg).build();  // return 404 for resource not found
-		}
-		else {
-			return Response.status(200).entity(vehicle).build();
-		}		
-	}
 	
 	@GET
 	@Produces({MediaType.APPLICATION_XML})
-	@Path("/vehicles/")
+	@Path("/")
 	public Response getAllCustomers() throws RemoteException {
 		this.databaseClient = new DatabaseClient();
 		
@@ -65,8 +41,8 @@ public class VehicleResource {
 	
 	@POST
 	@Consumes({MediaType.APPLICATION_XML})
-	@Path("/createVehicle/")
-	public Response createBooking(Vehicle newVehicle) throws RemoteException {
+	@Path("/")
+	public Response createVehicle(Vehicle newVehicle) throws RemoteException {
 		this.databaseClient = new DatabaseClient();
 		vehicles.add(newVehicle);
 		this.databaseClient.createVehicle(newVehicle);
@@ -76,10 +52,11 @@ public class VehicleResource {
 
 	@PUT
 	@Consumes({MediaType.APPLICATION_XML})
-	@Path("/updateVehicle/{vehicleId}")
-	public Response updateBooking(@PathParam("vehicleId") int vehicleId, Vehicle updatedVehicle) throws RemoteException {
+	@Path("/{vehicleId}")
+	public Response updateVehicle(@PathParam("vehicleId") int vehicleId, Vehicle updatedVehicle) throws RemoteException {
 		Vehicle vehicle = null;
 		this.databaseClient = new DatabaseClient();
+		this.vehicles = this.databaseClient.getVehicles();
 		for(Vehicle v : vehicles) {
 			if(v.getVehicleId() == vehicleId) {
 				vehicle = v;
@@ -99,8 +76,8 @@ public class VehicleResource {
 	
 	@DELETE
 	@Produces({MediaType.TEXT_HTML})
-	@Path("/deleteVehicle/{vehicleId}")
-	public Response deleteCustomer(@PathParam("vehicleId") int vehicleId) throws RemoteException {
+	@Path("/{vehicleId}")
+	public Response deleteVehicle(@PathParam("vehicleId") int vehicleId) throws RemoteException {
 		this.databaseClient = new DatabaseClient();
 		this.databaseClient.deleteCustomer(vehicleId);
 		

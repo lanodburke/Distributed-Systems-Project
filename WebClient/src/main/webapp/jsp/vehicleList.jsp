@@ -31,6 +31,12 @@
 	
 	<br>
 	<a href="/">Home</a>
+	<br>
+	<a href="/createVehicle">Add Vehicle</a>
+	<br>
+	<a href="/updateVehicle">Update Vehicle</a>
+	<br>
+	<a href="/deleteVehicle">Delete Vehicle</a>
 </body>
 </body>
 </html>

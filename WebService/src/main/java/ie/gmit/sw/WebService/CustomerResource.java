@@ -25,34 +25,10 @@ public class CustomerResource {
 	
 	private List<Customer> customers = new ArrayList<Customer>();
 	private DatabaseService databaseClient;
-		
-	@GET
-	@Produces({MediaType.APPLICATION_XML})
-	@Path("/{value}")
-	public Response getCustomer(@PathParam("value") int value) throws RemoteException {
-		this.databaseClient = new DatabaseClient();
-		
-		this.customers = this.databaseClient.getCustomers();
-		
-		Customer customer = null;
-		for(Customer c : customers) {
-			if(c.getCustomerId() == value) {
-				customer = c;
-			}
-		}
-		
-		if(customer == null) {
-			String msg = "The requested order does not exist";
-			return Response.status(404).entity(msg).build();  // return 404 for resource not found
-		}
-		else {
-			return Response.status(200).entity(customer).build();
-		}		
-	}
 	
 	@GET
 	@Produces({MediaType.APPLICATION_XML})
-	@Path("/customers/")
+	@Path("/")
 	public Response getAllCustomers() throws RemoteException {
 		this.databaseClient = new DatabaseClient();
 		
@@ -65,8 +41,8 @@ public class CustomerResource {
 	
 	@POST
 	@Consumes({MediaType.APPLICATION_XML})
-	@Path("/createCustomer/")
-	public Response createBooking(Customer newCustomer) throws RemoteException {
+	@Path("/")
+	public Response createCustomer(Customer newCustomer) throws RemoteException {
 		this.databaseClient = new DatabaseClient();
 		customers.add(newCustomer);
 		this.databaseClient.createCustomer(newCustomer);
@@ -76,8 +52,8 @@ public class CustomerResource {
 
 	@PUT
 	@Consumes({MediaType.APPLICATION_XML})
-	@Path("/updateCustomer/{customerId}")
-	public Response updateBooking(@PathParam("customerId") int customerId, Customer updatedCustomer) throws RemoteException {
+	@Path("/{customerId}")
+	public Response updateCustomer(@PathParam("customerId") int customerId, Customer updatedCustomer) throws RemoteException {
 		Customer customer = null;
 		this.databaseClient = new DatabaseClient();
 		for(Customer c : customers) {
@@ -99,7 +75,7 @@ public class CustomerResource {
 	
 	@DELETE
 	@Produces({MediaType.TEXT_HTML})
-	@Path("/deleteCustomer/{customerId}")
+	@Path("/{customerId}")
 	public Response deleteCustomer(@PathParam("customerId") int customerId) throws RemoteException {
 		this.databaseClient = new DatabaseClient();
 		this.databaseClient.deleteCustomer(customerId);

@@ -18,7 +18,7 @@ public class BookingService {
 
 	public List<Booking> getAllBookings() {
         Client client = Client.create();
-        WebResource webresource = client.resource(this.url + "bookings/");
+        WebResource webresource = client.resource(this.url);
                              
         return webresource.get(new GenericType<List<Booking>>(){});
     }
@@ -27,7 +27,7 @@ public class BookingService {
 		Client client = Client.create();
 
 		WebResource webResource = client
-		   .resource(this.url + "createBooking/");
+		   .resource(this.url);
 
 		ClientResponse response = webResource.type("application/xml")
 		   .post(ClientResponse.class, booking);
@@ -42,7 +42,7 @@ public class BookingService {
 		Client client = Client.create();
 
 		WebResource webResource = client
-		   .resource(this.url + "updateBooking/" + booking.getBookingId());
+		   .resource(this.url + booking.getBookingId());
 
 		ClientResponse response = webResource.type("application/xml")
 		   .put(ClientResponse.class, booking);
@@ -59,7 +59,7 @@ public class BookingService {
 		Client client = Client.create();
 
 		WebResource webResource = client
-		   .resource(this.url + "deleteBooking/" + booking.getBookingId());
+		   .resource(this.url + booking.getBookingId());
 
 		ClientResponse response = webResource.delete(ClientResponse.class);
 

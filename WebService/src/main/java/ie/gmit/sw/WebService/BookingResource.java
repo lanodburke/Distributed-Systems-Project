@@ -28,31 +28,7 @@ public class BookingResource {
 		
 	@GET
 	@Produces({MediaType.APPLICATION_XML})
-	@Path("/{value}")
-	public Response getBooking(@PathParam("value") int value) throws RemoteException {
-		this.databaseClient = new DatabaseClient();
-		
-		this.bookings = this.databaseClient.getBookings();
-		
-		Booking booking = null;
-		for(Booking b : bookings) {
-			if(b.getBookingId() == value) {
-				booking = b;
-			}
-		}
-		
-		if(booking == null) {
-			String msg = "The requested order does not exist";
-			return Response.status(404).entity(msg).build();  // return 404 for resource not found
-		}
-		else {
-			return Response.status(200).entity(booking).build();
-		}		
-	}
-	
-	@GET
-	@Produces({MediaType.APPLICATION_XML})
-	@Path("/bookings/")
+	@Path("/")
 	public Response getAllBookings() throws RemoteException {
 		this.databaseClient = new DatabaseClient();
 		
@@ -66,7 +42,7 @@ public class BookingResource {
 	@POST
 	@Consumes({MediaType.APPLICATION_XML})
 	@Produces({MediaType.TEXT_HTML})
-	@Path("/createBooking/")
+	@Path("/")
 	public Response createBooking(Booking newBooking) throws RemoteException {
 		this.databaseClient = new DatabaseClient();
 		bookings.add(newBooking);
@@ -78,10 +54,11 @@ public class BookingResource {
 
 	@PUT
 	@Consumes({MediaType.APPLICATION_XML})
-	@Path("/updateBooking/{bookingId}")
+	@Path("/bookingId}")
 	public Response updateBooking(@PathParam("bookingId") int bookingId, Booking updatedBooking) throws RemoteException {
 		Booking booking = null;
 		this.databaseClient = new DatabaseClient();
+		this.bookings = databaseClient.getBookings();
 		for(Booking b : bookings) {
 			if(b.getBookingId() == bookingId) {
 				booking = b;
@@ -101,7 +78,7 @@ public class BookingResource {
 	
 	@DELETE
 	@Produces({MediaType.TEXT_HTML})
-	@Path("/deleteBooking/{bookingId}")
+	@Path("/{bookingId}")
 	public Response deleteBooking(@PathParam("bookingId") int bookingId) throws RemoteException {
 		this.databaseClient = new DatabaseClient();
 		this.databaseClient.deleteBooking(bookingId);

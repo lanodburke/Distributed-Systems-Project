@@ -32,5 +32,11 @@
 	
 	<br>
 	<a href="/">Home</a>
+	<br>
+	<a href="/createCustomer">Add Customer</a>
+	<br>
+	<a href="/updateCustomer">Update Customer</a>
+	<br>
+	<a href="/deleteCustomer">Delete Customer</a>
 </body>
 </html>
